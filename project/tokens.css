@@ -1,0 +1,217 @@
+/* Fooks Forward design tokens — extracted from the Figma design document
+   (learn-slot-52202294.figma.site) */
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-Air.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-AirItalic.otf') format('opentype');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Aeonik';
+  src: url('fonts/Aeonik-BlackItalic.otf') format('opentype');
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Base / Gray */
+  --white: #ffffff;
+  --black: #1c1c1c;
+  --gray-25:  #fdfdfd;
+  --gray-50:  #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-200: #e9eaeb;
+  --gray-300: #d5d7da;
+  --gray-400: #a4a7ae;
+  --gray-500: #717680;
+  --gray-600: #535862;
+  --gray-700: #414651;
+  --gray-800: #252b37;
+  --gray-900: #181d27;
+  --gray-950: #0a0d12;
+
+  /* Brand (deep indigo) */
+  --brand-25:  #f4f6ff;
+  --brand-50:  #d8dfff;
+  --brand-100: #b5c3ff;
+  --brand-200: #859cff;
+  --brand-300: #5f7eff;
+  --brand-400: #516cdf;
+  --brand-500: #4d66d3;
+  --brand-600: #435abd;
+  --brand-700: #3b4fa7;
+  --brand-800: #2f4088;
+  --brand-900: #212f69;
+  --brand-main:#101735;
+
+  /* Error (red) */
+  --error-25:  #fffbfa;
+  --error-50:  #fef3f2;
+  --error-100: #fee4e2;
+  --error-200: #fecdca;
+  --error-300: #fda29b;
+  --error-400: #f97066;
+  --error-500: #f04438;
+  --error-600: #d92d20;
+  --error-700: #b42318;
+
+  /* Warning (amber) */
+  --warn-25:  #fffcf5;
+  --warn-50:  #fffaeb;
+  --warn-100: #fef0c7;
+  --warn-200: #fedf89;
+  --warn-300: #fec84b;
+  --warn-400: #fdb022;
+  --warn-500: #f79009;
+  --warn-600: #dc6803;
+  --warn-700: #b54708;
+
+  /* Success (green) */
+  --success-25:  #f6fef9;
+  --success-50:  #ecfdf3;
+  --success-100: #dcfae6;
+  --success-200: #abefc6;
+  --success-300: #75e0a7;
+  --success-400: #47cd89;
+  --success-500: #17b26a;
+  --success-600: #079455;
+  --success-700: #067647;
+
+  /* Secondary — stat-card tints */
+  --gold-50:   #fff5e7;
+  --gold-200:  #ffe9ca;
+  --gold-500:  #ffcf8e;
+  --gold-main: #c79e67;
+
+  --purple-50:   #f4f3ff;
+  --purple-200:  #ebeaff;
+  --purple-500:  #d1d0fb;
+  --purple-700:  #9794ff;
+  --purple-900:  #615dff;
+
+  --sgreen-50:  #ecfff7;
+  --sgreen-200: #cfffec;
+  --sgreen-500: #bde8d7;
+  --sgreen-700: #73e0b5;
+
+  --pink-50:  #fffafe;
+  --pink-200: #ffebf9;
+  --pink-500: #f8c7e9;
+
+  --sky-50:  #f0f6ff;
+  --sky-200: #e0eeff;
+  --sky-500: #c1e0ff;
+  --sky-700: #8ec6ff;
+
+  /* CTA Orange — the vibrant accent */
+  --cta-50:  #fff7ee;
+  --cta-200: #fff1e3;
+  --cta-400: #ffe5ca;
+  --cta-500: #fae3c7; /* base */
+  --cta-700: #ffbf7c;
+  --cta-900: #ff9a33;
+  --cta:     #ff8100; /* vivid 950 */
+
+  /* Type scale (px) — font-sizes from the DS */
+  --fs-h1: 72px;
+  --fs-h2: 60px;
+  --fs-h3: 48px;
+  --fs-h4: 36px;
+  --fs-h5: 30px;
+  --fs-large: 24px;
+  --fs-medium: 20px;
+  --fs-normal: 18px;
+  --fs-semi: 16px;
+  --fs-small: 14px;
+  --fs-xs: 12px;
+
+  --lh-display: 1.45;
+  --lh-heading: 1.55;
+  --lh-body: 1.80;
+  --lh-tight: 1.50;
+
+  /* Shape */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px rgba(16, 23, 53, 0.05);
+  --shadow-sm: 0 1px 3px rgba(16, 23, 53, 0.07), 0 1px 2px rgba(16, 23, 53, 0.04);
+  --shadow-md: 0 4px 8px -2px rgba(16, 23, 53, 0.08), 0 2px 4px -2px rgba(16, 23, 53, 0.04);
+  --shadow-lg: 0 12px 24px -4px rgba(16, 23, 53, 0.10), 0 4px 8px -2px rgba(16, 23, 53, 0.04);
+
+  /* Layout */
+  --sidebar-w: 272px;
+  --topbar-h: 64px;
+
+  /* Semantic */
+  --bg: var(--gray-50);
+  --bg-card: #ffffff;
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+  --fg: var(--gray-950);
+  --fg-muted: var(--gray-600);
+  --fg-subtle: var(--gray-500);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Aeonik', system-ui, -apple-system, sans-serif;
+  font-size: var(--fs-semi);
+  line-height: var(--lh-body);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 999px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+/* Focus */
+:focus-visible { outline: 2px solid var(--brand-300); outline-offset: 2px; border-radius: var(--radius-sm); }

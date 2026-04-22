@@ -1,6 +1,6 @@
 /* global React, ReactDOM, Icons, Sidebar, Breadcrumb, PageHead, EmptyState,
           OnboardingLanding, TotaalOverzicht, EmployeeDetail,
-          IdReviewList, IdReviewDetail, TwvStatussen, Stub */
+          IdReviewList, IdReviewDetail, TwvDossierDetail, TwvStatussen, Stub */
 const { useState: useStateApp, useEffect: useEffectApp } = React;
 
 const TWEAKS_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -28,6 +28,7 @@ function App() {
     catch { return 'onboarding'; }
   });
   const [employeeId, setEmployeeId] = useStateApp(null);
+  const [twvDossierId, setTwvDossierId] = useStateApp(null);
   const [toasts, setToasts] = useStateApp([]);
   const [tweakMode, setTweakMode] = useStateApp(false);
   const [tweaks, setTweaks] = useStateApp(TWEAKS_DEFAULTS);
@@ -66,6 +67,7 @@ function App() {
   const navigate = (r) => { setRoute(r); };
   const openEmployee = (id) => { setEmployeeId(id); setRoute('employee'); };
   const startReview  = (id) => { setEmployeeId(id); setRoute('onboarding-id-review'); };
+  const openTwvDossier = (id) => { setTwvDossierId(id); setRoute('onboarding-twv-detail'); };
   const completeReview = (nextId) => {
     if (nextId) { setEmployeeId(nextId); setRoute('onboarding-id-review'); }
     else { setRoute('onboarding-id'); toast('Alle beoordelingen afgerond', 'ok'); }
@@ -85,7 +87,9 @@ function App() {
     case 'onboarding-id-review':
       page = <IdReviewDetail employeeId={employeeId} onNavigate={navigate} onCompleteReview={completeReview} toast={toast} />; break;
     case 'onboarding-twv':
-      page = <TwvStatussen onNavigate={navigate} />; break;
+      page = <TwvStatussen onNavigate={navigate} onOpenDossier={openTwvDossier} />; break;
+    case 'onboarding-twv-detail':
+      page = <TwvDossierDetail dossierId={twvDossierId} onNavigate={navigate} toast={toast} />; break;
     case 'dashboard':        page = <Stub title="Dashboard" onNavigate={navigate} />; break;
     case 'support-open':     page = <Stub title="Support — openstaande tickets" onNavigate={navigate} />; break;
     case 'support-kb':       page = <Stub title="Support — kennisbank" onNavigate={navigate} />; break;

@@ -193,16 +193,19 @@ function TotaalOverzicht({ onNavigate, onOpenEmployee }) {
 
 // ---------- Screen 2b: Employee detail ----------
 function EmployeeDetail({ employeeId, onNavigate }) {
-  const { EMPLOYEES } = window.AppData;
+  const { EMPLOYEES, cosignChecklist, fmtDate: fmt } = window.AppData;
   const emp = EMPLOYEES.find(e => e.id === employeeId);
   if (!emp) return <div>Medewerker niet gevonden.</div>;
 
   const steps = [
-    { key: 'registratie',   label: 'Registratie',    done: true },
-    { key: 'id',            label: 'ID-verificatie', done: emp.phase === 'done' || emp.phase === 'twv', active: emp.phase === 'id' },
-    { key: 'contract',      label: 'Contract',        done: emp.phase === 'done', active: emp.phase === 'busy' || emp.phase === 'twv' },
-    { key: 'afronding',     label: 'Afronding',       done: emp.phase === 'done', active: false },
+    { key: 'registratie', label: 'Registratie',    done: true },
+    { key: 'id',          label: 'ID-verificatie', done: emp.phase === 'done' || emp.phase === 'twv', active: emp.phase === 'id' },
+    { key: 'contract',    label: 'Contract',        done: emp.phase === 'done', active: emp.phase === 'busy' || emp.phase === 'twv' },
+    { key: 'afronding',   label: 'Afronding',       done: emp.phase === 'done', active: false },
   ];
+
+  const checklist = cosignChecklist(emp);
+  const allDone = checklist.every(c => c.done);
 
   return (
     <>
@@ -215,7 +218,9 @@ function EmployeeDetail({ employeeId, onNavigate }) {
         ]}
         onNavigate={onNavigate}
       />
-      <PageHead title={emp.name} subtitle={emp.employer}
+      <PageHead
+        title={emp.name}
+        subtitle={emp.employer}
         actions={<>
           <button className="btn btn-outline"><Icons.MoreHoriz size={16} /></button>
           <button className="btn btn-primary"><Icons.Send size={16} /> Contact</button>
@@ -223,6 +228,7 @@ function EmployeeDetail({ employeeId, onNavigate }) {
       />
 
       <div className="detail-grid">
+        {/* Left column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <section className="card card-pad sub-card">
             <h3>Voortgang</h3>
@@ -242,14 +248,15 @@ function EmployeeDetail({ employeeId, onNavigate }) {
           <section className="card card-pad sub-card">
             <h3>Acties</h3>
             <div className="action-list">
-              <button className="action-btn"><Icons.ShieldCheck /> TWV beheren</button>
-              <button className="action-btn"><Icons.FileCheck /> Co-signing</button>
-              <button className="action-btn"><Icons.Bell /> Herinnering sturen</button>
-              <button className="action-btn danger"><Icons.X /> Intrekken</button>
+              <button className="action-btn"><Icons.ShieldCheck size={18} /> TWV beheren</button>
+              <button className="action-btn"><Icons.FileCheck size={18} /> Co-signing</button>
+              <button className="action-btn"><Icons.Bell size={18} /> Herinnering sturen</button>
+              <button className="action-btn danger"><Icons.X size={18} /> Intrekken</button>
             </div>
           </section>
         </div>
 
+        {/* Right column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <section className="card card-pad sub-card">
             <h3>Persoonsgegevens</h3>
@@ -261,7 +268,9 @@ function EmployeeDetail({ employeeId, onNavigate }) {
                 <div className="kv"><span className="k">Documentnummer</span><span className="v">{emp.docNumber || '—'}</span></div>
               </div>
             ) : (
-              <div className="empty">Nog geen persoonsgegevens — deze worden aangevuld zodra de medewerker zijn dossier voltooit.</div>
+              <div className="empty">
+                Nog geen persoonsgegevens — deze worden aangevuld zodra de medewerker zijn dossier voltooit.
+              </div>
             )}
           </section>
 
@@ -270,12 +279,39 @@ function EmployeeDetail({ employeeId, onNavigate }) {
             {emp.role ? (
               <div className="kv-list">
                 <div className="kv"><span className="k">Functie</span><span className="v">{emp.role}</span></div>
-                <div className="kv"><span className="k">Startdatum</span><span className="v">{window.AppData.fmtDate(emp.startDate)}</span></div>
+                <div className="kv"><span className="k">Startdatum</span><span className="v">{fmt(emp.startDate)}</span></div>
                 <div className="kv"><span className="k">Uren per week</span><span className="v">{emp.hoursPerWeek} uur</span></div>
                 <div className="kv"><span className="k">Bruto uurloon</span><span className="v">€ {emp.salary.toFixed(2).replace('.', ',')}</span></div>
               </div>
             ) : (
               <div className="empty">Nog geen plaatsing geregistreerd.</div>
+            )}
+          </section>
+
+          {/* Cosigning checklist */}
+          <section className="card card-pad sub-card">
+            <h3>Afronden — checklist</h3>
+            <div className="cosign-list">
+              {checklist.map(item => (
+                <div key={item.key} className={`cosign-item ${item.done ? 'done' : 'pending'}`}>
+                  <div className={`cosign-indicator ${item.done ? 'done' : 'pending'}`}>
+                    {item.done && <Icons.Check size={12} />}
+                  </div>
+                  <div className="cosign-body">
+                    <div className="cosign-label">{item.label}</div>
+                    <div className="cosign-hint">{item.hint}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {allDone ? (
+              <button className="btn btn-success" style={{ width: '100%', marginTop: 14 }}>
+                <Icons.BadgeCheck size={16} /> Onboarding definitief afronden
+              </button>
+            ) : (
+              <p style={{ fontSize: 12, color: 'var(--fg-muted)', marginTop: 10, marginBottom: 0 }}>
+                {checklist.filter(c => !c.done).length} stap(pen) nog niet voltooid.
+              </p>
             )}
           </section>
         </div>
